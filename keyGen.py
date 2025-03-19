@@ -1,21 +1,19 @@
 import random
 
-def keyGen(seed):
-    key = {}
-    random.seed(seed)
+def keyGen(seeder):
+    key = []
+    random.seed(seedGen(seeder))
+    translated = []
     for i in range(32,126):
         v = (i + random.randint(1,1000)) % 127
-        while v in key.values() or v < 32:
+        while v in translated or v < 32:
             v = (i + random.randint(1,1000)) % 127
-        key[chr(i)] = chr(v)
-    reversedKey = {v:k for k,v in key.items()}
-    key = {v:k for k,v in reversedKey.items()}
+        translated += [v]
+        key.append([chr(i), chr(v)])
     return key
 
-def seedGen(choice, seeder):
+def seedGen(seeder):
     seed = 0
-    match choice:
-        case 1:
-            for c in seeder:
-                seed += ord(c)
-    return keyGen(seed)
+    for c in seeder:
+        seed += ord(c)
+    return seed
