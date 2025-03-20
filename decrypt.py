@@ -1,10 +1,13 @@
 import keyGen
 
-def __decrypt(filename):
+def __decrypt(filename, seeder = None):
     file = open(filename, "r")
     uncodedmessage = ""
-    seeder = file.readline()
-    seeder = seeder.strip()
+    if seeder is None:
+        seeder = file.readline()
+        seeder = seeder.strip()
+    else:
+        file.readline()
     key = keyGen.keyGen(seeder)
     for line in file:
         codedmessage = line.strip()
@@ -21,4 +24,4 @@ def __decrypt(filename):
     except FileExistsError:
         print(f"File by {newfilename}_decoded.txt already exists. Decoding process cancelled.")
 
-__decrypt("testmessage1_coded.txt")
+__decrypt("testmessage1_coded.txt", 'Isnt this string')
