@@ -1,11 +1,14 @@
 import keyGen
 import datetime
 
-def __encrypt(filename):
+def __encrypt(filename, seeder = None):
     datetimer = str(datetime.datetime.now())
     file = open(filename, "r")
     codedmessage = ""
-    key = keyGen.keyGen(datetimer)
+    if seeder is None:
+        key = keyGen.keyGen(datetimer)
+    else:
+        key = keyGen.keyGen(seeder)
     for line in file:
         uncodedmessage = line.strip()
         for char in uncodedmessage:
@@ -23,4 +26,4 @@ def __encrypt(filename):
     except FileExistsError:
         print(f"File by {filename}_coded.txt already exists. Encoding process cancelled.")
 
-__encrypt("testmessage1.txt")
+__encrypt("testmessage1.txt", "Isnt this string")
